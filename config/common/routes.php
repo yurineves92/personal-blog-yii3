@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Auth\Rbac\Permission;
 use App\Web\Admin;
+use App\Web\Api;
 use App\Web\Shared\Middleware\AccessMiddleware;
 use App\Web\Site;
 use Yiisoft\Http\Method;
@@ -22,6 +23,34 @@ return [
     // ---------------------------------------------------------------- Autenticação
     Route::methods($getPost, '/admin/login')->action(Admin\Auth\LoginAction::class)->name('admin/login'),
     Route::post('/admin/logout')->action(Admin\Auth\LogoutAction::class)->name('admin/logout'),
+
+    // ---------------------------------------------------------------- API REST (token Bearer, sem CSRF)
+    Group::create('/admin/api/v1')
+        ->routes(
+            Route::post('/auth/token')->action([Api\V1\AuthController::class, 'token'])->name('api/auth/token'),
+            Group::create()
+                ->middleware(Api\ApiAuthMiddleware::class)
+                ->routes(
+                    Route::get('/me')->action([Api\V1\AuthController::class, 'me'])->name('api/me'),
+
+                    Route::get('/posts')->action([Api\V1\PostController::class, 'index'])->name('api/post/index'),
+                    Route::post('/posts')->action([Api\V1\PostController::class, 'create'])->name('api/post/create'),
+                    Route::get('/posts/{id:\d+}')->action([Api\V1\PostController::class, 'view'])->name('api/post/view'),
+                    Route::methods([Method::PUT, Method::PATCH], '/posts/{id:\d+}')->action([Api\V1\PostController::class, 'update'])->name('api/post/update'),
+                    Route::delete('/posts/{id:\d+}')->action([Api\V1\PostController::class, 'delete'])->name('api/post/delete'),
+                    Route::post('/posts/{id:\d+}/{transition:submit|approve|reject|unpublish}')
+                        ->action([Api\V1\PostController::class, 'transition'])
+                        ->name('api/post/transition'),
+
+                    Route::get('/categories')->action([Api\V1\CategoryController::class, 'index'])->name('api/category/index'),
+                    Route::post('/categories')->action([Api\V1\CategoryController::class, 'create'])->name('api/category/create'),
+                    Route::methods([Method::PUT, Method::PATCH], '/categories/{id:\d+}')->action([Api\V1\CategoryController::class, 'update'])->name('api/category/update'),
+                    Route::delete('/categories/{id:\d+}')->action([Api\V1\CategoryController::class, 'delete'])->name('api/category/delete'),
+                ),
+            // Qualquer outro caminho da API: 404 em JSON.
+            Route::methods([Method::GET, Method::POST, Method::PUT, Method::PATCH, Method::DELETE], '/{path:.*}')
+                ->action([Api\V1\AuthController::class, 'notFound']),
+        ),
 
     // ---------------------------------------------------------------- Painel CMS
     Group::create('/admin')
@@ -66,6 +95,12 @@ return [
                     Route::methods($getPost, '/{id:\d+}/editar')->action(Admin\User\EditAction::class)->name('admin/user/update'),
                     Route::post('/{id:\d+}/excluir')->action(Admin\User\DeleteAction::class)->name('admin/user/delete'),
                 ),
+
+            // Documentação da API (Swagger UI) e tokens do usuário logado
+            Route::get('/api')->action(Admin\Api\DocsAction::class)->name('admin/api'),
+            Route::get('/api/openapi.json')->action(Admin\Api\OpenApiAction::class)->name('admin/api/spec'),
+            Route::post('/api/tokens')->action([Admin\Api\TokenAction::class, 'create'])->name('admin/api/token/create'),
+            Route::post('/api/tokens/{id:\d+}/revogar')->action([Admin\Api\TokenAction::class, 'revoke'])->name('admin/api/token/revoke'),
 
             // Configurações do site (textos da landing page)
             Route::methods($getPost, '/configuracoes')

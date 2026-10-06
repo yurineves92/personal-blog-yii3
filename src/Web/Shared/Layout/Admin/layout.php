@@ -54,6 +54,7 @@ if ($user !== null) {
     if ($currentUser->can(Permission::USER_MANAGE)) {
         $menu[] = ['Usuários', 'admin/user/index', '☺', str_starts_with($routeName, 'admin/user/'), null];
     }
+    $menu[] = ['API', 'admin/api', '{}', $routeName === 'admin/api', null];
     if ($currentUser->can(Permission::SETTINGS_MANAGE)) {
         $menu[] = ['Configurações', 'admin/settings', '⚙', $routeName === 'admin/settings', null];
     }

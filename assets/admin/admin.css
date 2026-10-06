@@ -498,3 +498,18 @@ textarea { resize: vertical; }
     .table .actions .btn { margin: 2px 0; }
 }
 .input--short { min-height: 0; font-size: 13px; }
+
+/* ---------------------------------------------------------------- Página da API */
+.callout--success { border-color: var(--success); background: #ecfaf1; }
+.token-box { display: flex; align-items: center; gap: .6rem; margin: .6rem 0 .2rem; }
+.token-box code { flex: 1; overflow-x: auto; padding: .55rem .7rem; background: #fff; border: 1px solid #b7e4c7; font-size: .85rem; white-space: nowrap; }
+.api-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 1.4rem; }
+@media (max-width: 1000px) { .api-grid { grid-template-columns: minmax(0, 1fr); } }
+.token-form { display: flex; gap: .5rem; margin-bottom: 1rem; }
+.token-form input { flex: 1; min-width: 0; }
+.code-sample { margin: 0; overflow-x: auto; padding: 1rem; border-radius: 8px; background: #1b1e24; color: #e5e7eb; font-size: .8rem; line-height: 1.6; }
+.swagger-panel { padding: .5rem 1rem; }
+/* Neutraliza estilos globais de formulário do painel dentro do Swagger UI */
+.swagger-ui input[type="text"], .swagger-ui textarea, .swagger-ui select { width: auto; box-shadow: none; }
+.swagger-ui textarea { width: 100%; font-family: ui-monospace, monospace; }
+.swagger-ui .info { margin: 1.5rem 0; }
