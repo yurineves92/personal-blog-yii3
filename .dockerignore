@@ -1,0 +1,7 @@
+.git
+.idea
+.vscode
+vendor
+runtime
+public/assets
+.env

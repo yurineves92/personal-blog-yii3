@@ -1,0 +1,16 @@
+# IDEs
+.idea
+.vscode
+nbproject
+*.sublime-project
+*.sublime-workspace
+
+# SO
+Thumbs.db
+.DS_Store
+
+# Composer
+/vendor
+
+# Ambiente local
+.env
