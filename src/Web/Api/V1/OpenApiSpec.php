@@ -19,6 +19,7 @@ use OpenApi\Attributes as OA;
     servers: [new OA\Server(url: '/admin/api/v1', description: 'Este servidor')],
     security: [['bearerAuth' => []]],
     tags: [
+        new OA\Tag(name: 'Public', description: 'Leitura pública de conteúdo publicado (sem token, CORS liberado)'),
         new OA\Tag(name: 'Auth', description: 'Tokens e usuário autenticado'),
         new OA\Tag(name: 'Posts', description: 'CRUD de posts e fluxo editorial'),
         new OA\Tag(name: 'Categories', description: 'Categorias'),

@@ -28,6 +28,17 @@ return [
     Group::create('/admin/api/v1')
         ->routes(
             Route::post('/auth/token')->action([Api\V1\AuthController::class, 'token'])->name('api/auth/token'),
+
+            // Leitura pública (sem token): só conteúdo publicado, com CORS liberado.
+            Group::create('/public')
+                ->middleware(Api\CorsMiddleware::class)
+                ->routes(
+                    Route::methods([Method::GET, Method::OPTIONS], '/site')->action([Api\V1\PublicController::class, 'site'])->name('api/public/site'),
+                    Route::methods([Method::GET, Method::OPTIONS], '/posts')->action([Api\V1\PublicController::class, 'posts'])->name('api/public/posts'),
+                    Route::methods([Method::GET, Method::OPTIONS], '/posts/{slug:[a-z0-9-]+}')->action([Api\V1\PublicController::class, 'show'])->name('api/public/post'),
+                    Route::methods([Method::GET, Method::OPTIONS], '/categories')->action([Api\V1\PublicController::class, 'categories'])->name('api/public/categories'),
+                ),
+
             Group::create()
                 ->middleware(Api\ApiAuthMiddleware::class)
                 ->routes(

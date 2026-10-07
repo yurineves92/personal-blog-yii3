@@ -508,8 +508,11 @@ textarea { resize: vertical; }
 .token-form { display: flex; gap: .5rem; margin-bottom: 1rem; }
 .token-form input { flex: 1; min-width: 0; }
 .code-sample { margin: 0; overflow-x: auto; padding: 1rem; border-radius: 8px; background: #1b1e24; color: #e5e7eb; font-size: .8rem; line-height: 1.6; }
+.code-sample code { padding: 0; background: none; color: inherit; font-size: inherit; }
 .swagger-panel { padding: .5rem 1rem; }
 /* Neutraliza estilos globais de formulário do painel dentro do Swagger UI */
 .swagger-ui input[type="text"], .swagger-ui textarea, .swagger-ui select { width: auto; box-shadow: none; }
 .swagger-ui textarea { width: 100%; font-family: ui-monospace, monospace; }
 .swagger-ui .info { margin: 1.5rem 0; }
+.prose .mermaid { margin: 1.5em 0; padding: 1rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; text-align: center; }
+.prose .mermaid svg { max-width: 100%; height: auto; }

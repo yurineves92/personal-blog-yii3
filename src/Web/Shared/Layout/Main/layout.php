@@ -106,6 +106,7 @@ $this->beginPage();
     </div>
 </footer>
 
+<?= $this->render(dirname(__DIR__, 2) . '/mermaid.php') ?>
 <?php $this->endBody() ?>
 </body>
 </html>
