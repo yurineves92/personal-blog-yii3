@@ -169,7 +169,7 @@ final readonly class PublicController
             'title' => $post->title,
             'slug' => $post->slug,
             'excerpt' => $post->summary(220),
-            'cover_url' => $post->coverUrl,
+            'cover_url' => $this->absolute($post->coverUrl),
             'category' => $post->categoryId !== null
                 ? ['id' => $post->categoryId, 'name' => $post->categoryName, 'slug' => $post->categorySlug]
                 : null,
@@ -179,5 +179,17 @@ final readonly class PublicController
             'url' => '/blog/' . $post->slug,
             'published_at' => Resource::date($post->publishedAt),
         ];
+    }
+
+    /**
+     * Capas locais (`/covers/...`) viram URL absoluta: o app PWA roda em outra origem.
+     */
+    private function absolute(?string $url): ?string
+    {
+        if ($url === null || !str_starts_with($url, '/')) {
+            return $url;
+        }
+        $uri = $this->currentRoute->getUri();
+        return $uri !== null ? $uri->getScheme() . '://' . $uri->getAuthority() . $url : $url;
     }
 }

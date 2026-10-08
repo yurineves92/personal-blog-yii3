@@ -1,6 +1,7 @@
 ---
 title: Bastidores #2: domínio, banco e repositórios
 excerpt: O modelo de dados do blog, entidades imutáveis com readonly, enums para status, repositórios com o query builder do yiisoft/db (sem ActiveRecord), migrations e a tabela de configurações que alimenta a landing page.
+cover: /covers/bastidores-2-dominio-banco-e-repositorios.webp
 category: Bastidores
 days_ago: 9
 ---

@@ -1,6 +1,7 @@
 ---
 title: Bastidores #4: site público e painel CMS
 excerpt: Como as telas foram organizadas: action e template lado a lado, dois layouts, formulários com FormModel, Markdown seguro, diagramas Mermaid, asset bundles e as lições de responsividade (incluindo um bug curioso no menu mobile).
+cover: /covers/bastidores-4-site-publico-e-painel-cms.webp
 category: Bastidores
 days_ago: 3
 ---

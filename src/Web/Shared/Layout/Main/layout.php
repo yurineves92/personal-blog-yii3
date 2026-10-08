@@ -42,6 +42,13 @@ $this->beginPage();
     <meta charset="<?= Html::encode($applicationParams->charset) ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= Html::encode($this->getParameter('metaDescription', $settings->get('site_tagline'))) ?>">
+    <meta property="og:site_name" content="<?= Html::encode($siteName) ?>">
+    <meta property="og:title" content="<?= Html::encode($title !== '' ? $title : $siteName) ?>">
+    <meta property="og:description" content="<?= Html::encode($this->getParameter('metaDescription', $settings->get('site_tagline'))) ?>">
+    <?php if (($ogImage = $this->getParameter('ogImage', null)) !== null): ?>
+        <meta property="og:image" content="<?= Html::encode($ogImage) ?>">
+        <meta name="twitter:card" content="summary_large_image">
+    <?php endif ?>
     <link rel="icon" href="<?= $aliases->get('@baseUrl/favicon.svg') ?>" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

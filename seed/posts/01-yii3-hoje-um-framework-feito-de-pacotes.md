@@ -1,6 +1,7 @@
 ---
 title: Yii3 hoje: um framework feito de pacotes
 excerpt: O Yii3 não é um "Yii2 com namespace novo". É um conjunto de pacotes independentes, PSR em todo lugar e zero estado global. Um panorama de como o framework está organizado hoje.
+cover: /covers/yii3-hoje-um-framework-feito-de-pacotes.webp
 category: Yii3
 days_ago: 30
 ---

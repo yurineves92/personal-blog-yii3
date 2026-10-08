@@ -1,6 +1,7 @@
 ---
 title: Bastidores #5: API REST, Swagger e app PWA em Vue
 excerpt: A API do blog dentro do painel: tokens Bearer guardados como hash, erros RFC 9457, RBAC reaproveitado, documentação gerada com swagger-php, endpoints públicos com CORS e um app PWA em Vue que funciona offline.
+cover: /covers/bastidores-5-api-rest-swagger-e-app-pwa-em-vue.webp
 category: Bastidores
 days_ago: 1
 ---

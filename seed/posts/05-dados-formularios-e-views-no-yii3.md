@@ -1,6 +1,7 @@
 ---
 title: Dados, formulários e views no Yii3
 excerpt: O ciclo completo de um formulário no Yii3: FormModel com atributos de validação, FormHydrator, query builder do yiisoft/db, migrations e o WebViewRenderer com layouts e injeções.
+cover: /covers/dados-formularios-e-views-no-yii3.webp
 category: Yii3
 days_ago: 18
 ---

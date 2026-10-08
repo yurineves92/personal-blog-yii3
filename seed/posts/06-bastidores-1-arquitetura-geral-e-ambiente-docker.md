@@ -1,6 +1,7 @@
 ---
 title: Bastidores #1: arquitetura geral e ambiente Docker
 excerpt: Começa a série sobre como este blog foi construído. Visão geral da arquitetura, a troca do FrankenPHP por Nginx + PHP-FPM, o entrypoint que sobe tudo sozinho e o volume que deixou cada página 12 vezes mais rápida.
+cover: /covers/bastidores-1-arquitetura-geral-e-ambiente-docker.webp
 category: Bastidores
 days_ago: 12
 ---

@@ -6,6 +6,7 @@ namespace App\Web\Admin\Post;
 
 use App\Auth\Rbac\Permission;
 use App\Blog\CategoryRepository;
+use App\Blog\CoverUploader;
 use App\Blog\Post;
 use App\Blog\PostRepository;
 use App\Blog\PostService;
@@ -14,8 +15,10 @@ use App\Blog\PostWorkflow;
 use App\Web\Shared\AdminLayout;
 use App\Web\Shared\ErrorPage;
 use App\Web\Shared\Redirector;
+use DomainException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Yiisoft\FormModel\FormHydrator;
 use Yiisoft\Router\CurrentRoute;
 use Yiisoft\Session\Flash\FlashInterface;
@@ -39,6 +42,7 @@ final readonly class EditAction
         private Redirector $redirector,
         private FlashInterface $flash,
         private ErrorPage $errorPage,
+        private CoverUploader $covers,
     ) {}
 
     public function __invoke(ServerRequestInterface $request): ResponseInterface
@@ -67,6 +71,12 @@ final readonly class EditAction
             $this->postService->validate($form, $post);
 
             if ($form->isValid()) {
+                $this->applyCover($form, $request);
+            }
+            if ($form->isValid()) {
+                if ($post?->coverUrl !== $form->coverUrl) {
+                    $this->covers->delete($post?->coverUrl); // capa antiga enviada pelo painel
+                }
                 return $this->save($form, $post);
             }
         }
@@ -81,6 +91,24 @@ final readonly class EditAction
                 'canPublish' => $this->currentUser->can(Permission::POST_PUBLISH_ANY)
                     && ($post === null || $post->status !== PostStatus::Published),
             ]);
+    }
+
+    /**
+     * Upload de capa tem prioridade sobre o campo de URL; o checkbox "remover" limpa a capa.
+     */
+    private function applyCover(PostForm $form, ServerRequestInterface $request): void
+    {
+        $file = $request->getUploadedFiles()[$form->getFormName()]['coverFile'] ?? null;
+
+        if ($file instanceof UploadedFileInterface && $file->getError() !== UPLOAD_ERR_NO_FILE) {
+            try {
+                $form->coverUrl = $this->covers->store($file);
+            } catch (DomainException $e) {
+                $form->addError($e->getMessage(), ['coverUrl']);
+            }
+        } elseif ($form->removeCover) {
+            $form->coverUrl = null;
+        }
     }
 
     private function save(PostForm $form, ?Post $post): ResponseInterface

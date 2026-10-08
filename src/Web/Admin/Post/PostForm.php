@@ -11,7 +11,6 @@ use Yiisoft\Validator\Rule\Integer;
 use Yiisoft\Validator\Rule\Length;
 use Yiisoft\Validator\Rule\Regex;
 use Yiisoft\Validator\Rule\Required;
-use Yiisoft\Validator\Rule\Url;
 
 final class PostForm extends FormModel
 {
@@ -30,7 +29,8 @@ final class PostForm extends FormModel
     #[Length(min: 20, lessThanMinMessage: 'O conteúdo deve ter ao menos {min} caracteres.')]
     public string $content = '';
 
-    #[Url(message: 'Informe uma URL válida (http/https).', skipOnEmpty: true)]
+    /** URL externa (https://...) ou caminho local servido pelo site (/covers/arquivo.webp). */
+    #[Regex(pattern: '~^(https?://[^\s]+|/[^\s/][^\s]*)$~i', message: 'Use uma URL http(s) ou um caminho como /covers/imagem.webp.', skipOnEmpty: true)]
     #[Length(max: 500, greaterThanMaxMessage: 'A URL deve ter no máximo {max} caracteres.', skipOnEmpty: true)]
     public ?string $coverUrl = null;
 
@@ -40,6 +40,10 @@ final class PostForm extends FormModel
     /** Botão clicado: save | submit | publish */
     #[Safe]
     public ?string $intent = null;
+
+    /** Checkbox "remover capa" do editor. O arquivo enviado é lido direto do request (ver EditAction). */
+    #[Safe]
+    public bool $removeCover = false;
 
     public static function fromPost(Post $post): self
     {

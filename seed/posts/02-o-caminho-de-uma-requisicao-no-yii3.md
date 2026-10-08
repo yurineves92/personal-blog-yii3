@@ -1,6 +1,7 @@
 ---
 title: O caminho de uma requisição no Yii3
 excerpt: Do Nginx até o HTML: o que acontece, passo a passo, quando alguém abre uma página de uma aplicação Yii3. Runner, container, pilha de middlewares, roteador e action.
+cover: /covers/o-caminho-de-uma-requisicao-no-yii3.webp
 category: Yii3
 days_ago: 27
 ---

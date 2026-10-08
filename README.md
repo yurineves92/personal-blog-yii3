@@ -40,10 +40,14 @@ Os artigos iniciais ficam versionados em [`seed/posts/`](seed/posts), um arquivo
 title: Título do artigo
 excerpt: Resumo exibido nos cards
 category: Yii3
+cover: /covers/titulo-do-artigo.webp
 days_ago: 10
 ---
 Conteúdo em **Markdown**, com blocos ```mermaid para diagramas.
 ```
+
+Capas: as dos artigos iniciais ficam em `public/covers/` (versionadas). Capas novas são enviadas pelo editor do painel
+(JPG, PNG ou WebP até 5 MB, tipo verificado pelo conteúdo) e salvas em `public/uploads/covers/` (fora do Git).
 
 - **Série Yii3** (5 artigos): pacotes, caminho de uma requisição, configuração e DI, rotas e middlewares, dados/formulários/views.
 - **Série Bastidores** (5 artigos): como este blog foi construído — Docker, banco, RBAC, telas, API e PWA.

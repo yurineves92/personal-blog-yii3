@@ -1,6 +1,7 @@
 ---
 title: Bastidores #3: autenticação, RBAC e fluxo editorial
 excerpt: Login com yiisoft/user, papéis e permissões com yiisoft/rbac definidos em código, a regra que só deixa o autor editar o próprio rascunho e a máquina de estados que leva um post do rascunho à publicação.
+cover: /covers/bastidores-3-autenticacao-rbac-e-fluxo-editorial.webp
 category: Bastidores
 days_ago: 6
 ---

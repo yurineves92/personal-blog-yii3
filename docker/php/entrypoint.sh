@@ -3,8 +3,8 @@ set -e
 
 cd /app
 
-mkdir -p runtime public/assets
-chmod -R 0777 runtime public/assets 2>/dev/null || true
+mkdir -p runtime public/assets public/uploads/covers
+chmod -R 0777 runtime public/assets public/uploads 2>/dev/null || true
 
 # Só faz o bootstrap da aplicação no processo principal (php-fpm),
 # não em `docker compose exec/run php ./yii ...`.

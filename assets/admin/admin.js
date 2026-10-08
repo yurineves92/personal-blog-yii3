@@ -93,3 +93,42 @@
         });
     });
 })();
+
+// Capa do post: prévia imediata do arquivo escolhido + arrastar e soltar.
+(function () {
+    'use strict';
+    document.querySelectorAll('[data-cover]').forEach(function (field) {
+        var drop = field.querySelector('.cover-drop');
+        var input = field.querySelector('input[type=file]');
+        var img = field.querySelector('.cover-drop__img');
+        var remove = field.querySelector('.cover-remove input');
+        if (!drop || !input || !img) return;
+
+        function preview(file) {
+            if (!file || !/^image\/(jpeg|png|webp)$/.test(file.type)) return;
+            img.src = URL.createObjectURL(file);
+            img.hidden = false;
+            drop.classList.add('has-image');
+            if (remove) remove.checked = false;
+        }
+
+        input.addEventListener('change', function () { preview(input.files[0]); });
+
+        ['dragenter', 'dragover'].forEach(function (type) {
+            drop.addEventListener(type, function (event) { event.preventDefault(); drop.classList.add('is-dragging'); });
+        });
+        ['dragleave', 'drop'].forEach(function (type) {
+            drop.addEventListener(type, function (event) { event.preventDefault(); drop.classList.remove('is-dragging'); });
+        });
+        drop.addEventListener('drop', function (event) {
+            var files = event.dataTransfer && event.dataTransfer.files;
+            if (!files || !files.length) return;
+            input.files = files;
+            preview(files[0]);
+        });
+
+        if (remove) {
+            remove.addEventListener('change', function () { drop.classList.toggle('is-removed', remove.checked); });
+        }
+    });
+})();

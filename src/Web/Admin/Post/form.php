@@ -43,7 +43,7 @@ $action = $post === null
     </div>
 <?php endif ?>
 
-<form class="editor" method="post" action="<?= $action ?>" novalidate>
+<form class="editor" method="post" action="<?= $action ?>" enctype="multipart/form-data" novalidate>
     <?= $csrf->hiddenInput() ?>
 
     <div class="editor__main">
@@ -99,6 +99,35 @@ $action = $post === null
         </div>
 
         <div class="panel">
+            <h3>Capa</h3>
+            <div class="<?= $f->fieldClass('coverUrl', 'field cover-field') ?>" data-cover>
+                <label class="cover-drop<?= $form->coverUrl ? ' has-image' : '' ?>" for="coverFile">
+                    <img class="cover-drop__img" src="<?= $f->value('coverUrl') ?>" alt=""<?= $form->coverUrl ? '' : ' hidden' ?>>
+                    <span class="cover-drop__empty">
+                        <strong>Clique ou arraste uma imagem</strong>
+                        <small>JPG, PNG ou WebP · até 5 MB · ideal 1600×900 (16:9)</small>
+                    </span>
+                    <span class="cover-drop__change">Trocar imagem</span>
+                </label>
+                <input id="coverFile" class="visually-hidden" type="file" name="<?= $f->name('coverFile') ?>" accept="image/jpeg,image/png,image/webp">
+                <?= $f->errorTag('coverUrl') ?>
+
+                <details class="cover-url"<?= $form->coverUrl && !str_starts_with((string) $form->coverUrl, '/uploads/') ? ' open' : '' ?>>
+                    <summary>ou usar uma URL</summary>
+                    <input id="coverUrl" type="text" name="<?= $f->name('coverUrl') ?>" value="<?= $f->value('coverUrl') ?>" placeholder="https://… ou /covers/imagem.webp">
+                </details>
+
+                <?php if ($form->coverUrl): ?>
+                    <label class="switch cover-remove">
+                        <input type="checkbox" name="<?= $f->name('removeCover') ?>" value="1">
+                        <span>Remover capa</span>
+                    </label>
+                <?php endif ?>
+                <div class="hint">Sem capa, o artigo abre direto no título.</div>
+            </div>
+        </div>
+
+        <div class="panel">
             <h3>Detalhes</h3>
             <div class="<?= $f->fieldClass('categoryId') ?>">
                 <label for="categoryId">Categoria</label>
@@ -118,12 +147,6 @@ $action = $post === null
                 <div class="hint">/blog/<span data-slug-preview><?= $f->value('slug') ?: '…' ?></span></div>
             </div>
 
-            <div class="<?= $f->fieldClass('coverUrl') ?>">
-                <label for="coverUrl">Imagem de capa (URL)</label>
-                <input id="coverUrl" type="url" name="<?= $f->name('coverUrl') ?>" value="<?= $f->value('coverUrl') ?>" placeholder="https://…">
-                <?= $f->errorTag('coverUrl') ?>
-                <div class="hint">Sem imagem, o site gera uma capa colorida automaticamente.</div>
-            </div>
         </div>
 
         <div class="panel panel--muted">

@@ -14,3 +14,6 @@ Thumbs.db
 
 # Ambiente local
 .env
+
+# Capas enviadas pelo painel
+/public/uploads/

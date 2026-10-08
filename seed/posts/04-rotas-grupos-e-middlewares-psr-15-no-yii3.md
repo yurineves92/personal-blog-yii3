@@ -1,6 +1,7 @@
 ---
 title: Rotas, grupos e middlewares PSR-15 no Yii3
 excerpt: Como declarar rotas, agrupar com prefixo e proteger áreas inteiras com middlewares, inclusive middlewares parametrizados com definições de array. Exemplos reais do painel deste blog.
+cover: /covers/rotas-grupos-e-middlewares-psr-15-no-yii3.webp
 category: Yii3
 days_ago: 21
 ---

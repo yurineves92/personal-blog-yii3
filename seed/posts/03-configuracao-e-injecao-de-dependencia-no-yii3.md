@@ -1,6 +1,7 @@
 ---
 title: Configuração e injeção de dependência no Yii3
 excerpt: Como o yiisoft/config junta a configuração de dezenas de pacotes com a sua, e como o yiisoft/di transforma essas definições em objetos. Grupos, ambientes, merge plan e definições.
+cover: /covers/configuracao-e-injecao-de-dependencia-no-yii3.webp
 category: Yii3
 days_ago: 24
 ---

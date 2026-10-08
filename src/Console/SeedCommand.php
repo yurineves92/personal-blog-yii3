@@ -30,6 +30,7 @@ use Yiisoft\Security\PasswordHasher;
  *     title: Título do artigo
  *     excerpt: Resumo exibido nos cards
  *     category: Yii3
+ *     cover: /covers/titulo-do-artigo.webp   (opcional)
  *     days_ago: 10
  *     ---
  *     Conteúdo em Markdown...
@@ -111,6 +112,7 @@ final class SeedCommand extends Command
                     'title' => $article['title'],
                     'slug' => Slugger::slugify($article['title']),
                     'excerpt' => $article['excerpt'],
+                    'cover_url' => $article['cover'],
                     'content' => $article['content'],
                     'category_id' => $categoryIds[$article['category']],
                     'author_id' => $authorId,
@@ -133,7 +135,7 @@ final class SeedCommand extends Command
     }
 
     /**
-     * @return list<array{file: string, title: string, excerpt: string, category: string, days_ago: int, content: string}>
+     * @return list<array{file: string, title: string, excerpt: string, category: string, cover: ?string, days_ago: int, content: string}>
      */
     private function loadArticles(): array
     {
@@ -160,6 +162,7 @@ final class SeedCommand extends Command
                 'title' => $meta['title'] ?? basename($file, '.md'),
                 'excerpt' => $meta['excerpt'] ?? '',
                 'category' => $meta['category'] ?? '',
+                'cover' => ($meta['cover'] ?? '') !== '' ? $meta['cover'] : null,
                 'days_ago' => (int) ($meta['days_ago'] ?? 0),
                 'content' => trim($m[2]) . "\n",
             ];
